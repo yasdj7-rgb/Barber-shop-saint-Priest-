@@ -84,6 +84,8 @@
         .modal-content h2 { margin-top: 0; color: var(--heading); }
         .modal-content label { display: block; margin: 1rem 0 0.5rem; color: var(--text); }
         .modal-content select, .modal-content input { width: 100%; padding: 0.5rem; border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; background: #1f2937; color: var(--text); }
+        .modal-content button { margin-top: 1rem; padding: 0.9rem 1.3rem; }
+        .modal-content #confirmation-message, .modal-content #sms-message { margin-top: 1rem; color: #d9f99d; font-weight: 600; }
         .calendar {
             max-width: 300px;
             margin: 1rem auto;
@@ -260,7 +262,9 @@
                 <input type="email" id="email" required>
                 <label for="phone">Téléphone :</label>
                 <input type="tel" id="phone" required>
+                <div id="sms-message" style="display:none;"></div>
                 <button type="submit" class="btn">Confirmer la réservation</button>
+                <div id="confirmation-message" style="display:none;"></div>
             </div>
         </div>
 
@@ -407,8 +411,17 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
-            alert(`Réservation confirmée pour ${name} le ${selectedDate.toLocaleDateString('fr-FR')} à ${time}. Une confirmation par email sera envoyée à ${email} et un SMS à ${phone}.`);
-            closeBooking();
+
+            const smsMessage = document.getElementById('sms-message');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            smsMessage.style.display = 'block';
+            smsMessage.textContent = `Message SMS envoyé à ${phone}: 'Votre rendez-vous est confirmé le ${selectedDate.toLocaleDateString('fr-FR')} à ${time}. Merci !'`;
+
+            confirmationMessage.style.display = 'block';
+            confirmationMessage.textContent = `Merci beaucoup ${name}, votre réservation du ${selectedDate.toLocaleDateString('fr-FR')} à ${time} a été enregistrée. Un email de confirmation sera envoyé à ${email}.`;
+
+            // Ouvrir le ticket flash (rester dans modal et montrer message)
+            setTimeout(() => closeBooking(), 3600);
         });
 
         window.onclick = function(event) {
