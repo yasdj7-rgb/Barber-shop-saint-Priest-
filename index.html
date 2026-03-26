@@ -5,41 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barber Shop Saint-Priest</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        header { background-color: #333; color: white; text-align: center; padding: 1rem; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .services { display: flex; flex-wrap: wrap; justify-content: space-around; }
-        .service { background: white; margin: 1rem; padding: 1rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
-        footer { background-color: #333; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
+        :root {
+            --bg: #0f172a;
+            --card: #1f2937;
+            --text: #e5e7eb;
+            --accent: #f59e0b;
+            --heading: #f8fafc;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top, #1a2231, #0b1221 60%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            background: rgba(8, 15, 26, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+        }
+
+        nav .brand { font-weight: 700; font-size: 1.25rem; color: var(--accent); }
+        nav .links a { color: var(--text); margin-left: 1.2rem; text-decoration: none; font-weight: 500; }
+        nav .links a:hover { color: var(--accent); }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 1.5rem 3rem;
+        }
+
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin: 0; color: var(--heading); }
+        .hero p { margin: 1rem auto 1.5rem; max-width: 760px; color: #cbd5e1; }
+
+        .btn { background: var(--accent); color: #0f172a; border: 0; padding: 0.9rem 1.6rem; border-radius: 999px; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform 0.2s ease, opacity 0.2s ease; }
+        .btn:hover { transform: translateY(-2px); opacity: .9; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
+
+        .grid {
+            display: grid;
+            gap: 1.4rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(148, 163, 184, .2);
+            border-radius: 14px;
+            padding: 1.4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover { transform: translateY(-6px); box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35); }
+
+        .card h3 { margin: 0 0 0.7rem; color: #f8fafc; }
+        .card p { margin: 0; color: #cbd5e1; }
+
+        .section-title {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: var(--heading);
+        }
+
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            background: #111827;
+            border: 1px solid rgba(148, 163, 184, .2);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+
+        .contact a { color: var(--accent); text-decoration: none; }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 1rem 0.75rem;
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 640px) {
+            nav { padding: 0.8rem 1rem; }
+            .hero { padding: 4rem 1rem 2rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Barber Shop Saint-Priest</h1>
-        <p>Votre salon de coiffure de confiance</p>
-    </header>
-    <div class="container">
-        <h2>Nos Services</h2>
-        <div class="services">
-            <div class="service">
-                <h3>Coupe de Cheveux</h3>
-                <p>Coupes classiques et modernes pour hommes.</p>
+    <div class="wrapper">
+        <nav>
+            <div class="brand">Barber Shop Saint-Priest</div>
+            <div class="links">
+                <a href="#services">Services</a>
+                <a href="#about">À propos</a>
+                <a href="#contact">Contact</a>
             </div>
-            <div class="service">
-                <h3>Rasage</h3>
-                <p>Rasage traditionnel avec soin.</p>
+        </nav>
+
+        <section class="hero">
+            <h1>Un style moderne, un service haut de gamme</h1>
+            <p>Découvrez un salon de coiffure premium à Saint-Priest avec des coupes précises, rasages traditionnels et une ambiance chaleureuse.</p>
+            <a href="#contact" class="btn">Réservez votre créneau</a>
+        </section>
+
+        <section class="container" id="services">
+            <h2 class="section-title">Nos services</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>Coupe Homme</h3>
+                    <p>Coupe sur mesure et conseils personnalisés selon votre style.</p>
+                </article>
+                <article class="card">
+                    <h3>Rasage classique</h3>
+                    <p>Rasage à l'ancienne avec serviette chaude et eau de soin.</p>
+                </article>
+                <article class="card">
+                    <h3>Barbe et stylisation</h3>
+                    <p>Entretien de barbe, taille précise et produits de qualité.</p>
+                </article>
+                <article class="card">
+                    <h3>Coloration & soins</h3>
+                    <p>Coloration, dégradés naturels et soins protecteurs cheveux/barbe.</p>
+                </article>
             </div>
-            <div class="service">
-                <h3>Coloration</h3>
-                <p>Colorations et teintures professionnelles.</p>
+        </section>
+
+        <section class="container" id="about">
+            <h2 class="section-title">À propos de nous</h2>
+            <p>Barber Shop Saint-Priest réunit savoir-faire et accueil convivial. Notre objectif : un rendu soigné et un barbershop où l'on se sent bien.</p>
+        </section>
+
+        <section class="container" id="contact">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact">
+                <p><strong>Adresse :</strong> 12 Rue de la Barberie, Saint-Priest, France</p>
+                <p><strong>Téléphone :</strong> <a href="tel:+33123456789">01 23 45 67 89</a></p>
+                <p><strong>Email :</strong> <a href="mailto:contact@barbersaintpriest.fr">contact@barbersaintpriest.fr</a></p>
+                <p><strong>Horaires :</strong> Mar-Sam 9h-19h</p>
             </div>
-        </div>
-        <h2>Contact</h2>
-        <p>Adresse: Saint-Priest, France</p>
-        <p>Téléphone: 01 23 45 67 89</p>
+        </section>
+
+        <footer>
+            &copy; 2026 Barber Shop Saint-Priest - Tous droits réservés
+        </footer>
     </div>
-    <footer>
-        <p>&copy; 2023 Barber Shop Saint-Priest</p>
-    </footer>
 </body>
 </html>
