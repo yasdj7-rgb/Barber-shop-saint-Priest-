@@ -43,11 +43,17 @@
 
         .hero {
             text-align: center;
-            padding: 5rem 1.5rem 3rem;
+            padding: 6rem 1rem 4rem;
+            min-height: 70vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.64)), url('https://images.unsplash.com/photo-1568136035903-e4f465fc15f4?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: #f8fafc;
         }
 
-        .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin: 0; color: var(--heading); }
-        .hero p { margin: 1rem auto 1.5rem; max-width: 760px; color: #cbd5e1; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.6rem); margin: 0; color: #ffffff; letter-spacing: 0.03em; }
+        .hero p { margin: 1rem auto 1.5rem; max-width: 760px; color: #d9e2ef; font-size: 1.1rem; }
 
         .btn { background: var(--accent); color: #0f172a; border: 0; padding: 0.9rem 1.6rem; border-radius: 999px; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform 0.2s ease, opacity 0.2s ease; }
         .btn:hover { transform: translateY(-2px); opacity: .9; }
