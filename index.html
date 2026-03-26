@@ -45,7 +45,7 @@
             text-align: center;
             padding: 6rem 1rem 4rem;
             min-height: 70vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.64)), url('https://images.unsplash.com/photo-1568136035903-e4f465fc15f4?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(15, 23, 42, 0.64), rgba(15, 23, 42, 0.64)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -84,8 +84,47 @@
         .modal-content h2 { margin-top: 0; color: var(--heading); }
         .modal-content label { display: block; margin: 1rem 0 0.5rem; color: var(--text); }
         .modal-content select, .modal-content input { width: 100%; padding: 0.5rem; border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; background: #1f2937; color: var(--text); }
-        .modal-content button { margin-top: 1rem; }
-        .close { float: right; font-size: 1.5rem; cursor: pointer; color: var(--text); }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .calendar-header {
+            display: contents;
+        }
+
+        .calendar-header div {
+            font-weight: bold;
+            text-align: center;
+            padding: 0.5rem;
+            background: var(--accent);
+            color: #0f172a;
+            border-radius: 8px;
+        }
+
+        .calendar-day {
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .calendar-day:hover {
+            background: rgba(245, 158, 11, 0.2);
+        }
+
+        .calendar-day.selected {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
+        .calendar-day.disabled {
+            color: #64748b;
+            cursor: not-allowed;
+        }
 
 
         .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
@@ -179,26 +218,43 @@
             <div class="modal-content">
                 <span class="close" onclick="closeBooking()">&times;</span>
                 <h2>Réserver un créneau</h2>
-                <form id="booking-form">
-                    <label for="date">Date :</label>
-                    <select id="date" required></select>
-                    <label for="time">Heure :</label>
-                    <select id="time" required>
-                        <option value="09:00">09:00</option>
-                        <option value="10:00">10:00</option>
-                        <option value="11:00">11:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="15:00">15:00</option>
-                        <option value="16:00">16:00</option>
-                        <option value="17:00">17:00</option>
-                        <option value="18:00">18:00</option>
-                    </select>
-                    <label for="name">Nom :</label>
-                    <input type="text" id="name" required>
-                    <label for="email">Email :</label>
-                    <input type="email" id="email" required>
-                    <button type="submit" class="btn">Confirmer la réservation</button>
-                </form>
+                <div id="calendar-container">
+                    <div id="calendar-header">
+                        <button id="prev-month" class="btn">Précédent</button>
+                        <h3 id="month-year"></h3>
+                        <button id="next-month" class="btn">Suivant</button>
+                    </div>
+                    <div class="calendar">
+                        <div class="calendar-header">
+                            <div>Lun</div>
+                            <div>Mar</div>
+                            <div>Mer</div>
+                            <div>Jeu</div>
+                            <div>Ven</div>
+                            <div>Sam</div>
+                            <div>Dim</div>
+                        </div>
+                        <div id="calendar-days"></div>
+                    </div>
+                </div>
+                <label for="time">Heure :</label>
+                <select id="time" required>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                </select>
+                <label for="name">Nom :</label>
+                <input type="text" id="name" required>
+                <label for="email">Email :</label>
+                <input type="email" id="email" required>
+                <label for="phone">Téléphone :</label>
+                <input type="tel" id="phone" required>
+                <button type="submit" class="btn">Confirmer la réservation</button>
             </div>
         </div>
 
@@ -206,28 +262,28 @@
             <h2 class="section-title">Nos services</h2>
             <div class="grid">
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Salon moderne" />
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80" alt="Coupe homme professionnelle" />
                     <div class="card-content">
                         <h3>Coupe Homme</h3>
                         <p>Coupe sur mesure et conseils personnalisés selon votre style.</p>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1551854838-6c2ef55ae477?auto=format&fit=crop&w=800&q=80" alt="Rasage professionnel" />
+                    <img src="https://images.unsplash.com/photo-1622296089863-9a4b0bb6d5b4?auto=format&fit=crop&w=800&q=80" alt="Rasage traditionnel" />
                     <div class="card-content">
                         <h3>Rasage classique</h3>
                         <p>Rasage à l'ancienne avec serviette chaude et eau de soin.</p>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=800&q=80" alt="Entretien barbe" />
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80" alt="Entretien barbe" />
                     <div class="card-content">
                         <h3>Barbe et stylisation</h3>
                         <p>Entretien de barbe, taille précise et produits de qualité.</p>
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1589739907778-1b91d8d54f70?auto=format&fit=crop&w=800&q=80" alt="Coloration cheveux" />
+                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=800&q=80" alt="Coloration cheveux" />
                     <div class="card-content">
                         <h3>Coloration & soins</h3>
                         <p>Coloration, dégradés naturels et soins protecteurs cheveux/barbe.</p>
@@ -257,10 +313,14 @@
     </div>
 
     <script>
+        let selectedDate = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
         function showBooking() {
             const modal = document.getElementById('booking-modal');
             modal.style.display = 'flex';
-            populateDates();
+            renderCalendar();
         }
 
         function closeBooking() {
@@ -268,27 +328,78 @@
             modal.style.display = 'none';
         }
 
-        function populateDates() {
-            const dateSelect = document.getElementById('date');
-            dateSelect.innerHTML = '';
-            const today = new Date();
-            for (let i = 0; i < 30; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() + i);
-                const option = document.createElement('option');
-                option.value = date.toISOString().split('T')[0];
-                option.textContent = date.toLocaleDateString('fr-FR');
-                dateSelect.appendChild(option);
+        function renderCalendar() {
+            const monthYear = document.getElementById('month-year');
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startDate = new Date(firstDay);
+            startDate.setDate(startDate.getDate() - firstDay.getDay() + 1); // Start from Monday
+
+            monthYear.textContent = new Date(currentYear, currentMonth).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+
+            for (let i = 0; i < 42; i++) { // 6 weeks
+                const day = new Date(startDate);
+                day.setDate(startDate.getDate() + i);
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                dayDiv.textContent = day.getDate();
+
+                if (day.getMonth() !== currentMonth) {
+                    dayDiv.classList.add('disabled');
+                } else if (day < new Date()) {
+                    dayDiv.classList.add('disabled');
+                } else {
+                    dayDiv.onclick = () => selectDate(day);
+                }
+
+                if (selectedDate && day.toDateString() === selectedDate.toDateString()) {
+                    dayDiv.classList.add('selected');
+                }
+
+                calendarDays.appendChild(dayDiv);
             }
         }
 
+        function selectDate(date) {
+            selectedDate = date;
+            renderCalendar();
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        }
+
+        document.getElementById('prev-month').onclick = prevMonth;
+        document.getElementById('next-month').onclick = nextMonth;
+
         document.getElementById('booking-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const date = document.getElementById('date').value;
+            if (!selectedDate) {
+                alert('Veuillez sélectionner une date.');
+                return;
+            }
             const time = document.getElementById('time').value;
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            alert(`Réservation confirmée pour ${name} le ${date} à ${time}. Un email de confirmation sera envoyé à ${email}.`);
+            const phone = document.getElementById('phone').value;
+            alert(`Réservation confirmée pour ${name} le ${selectedDate.toLocaleDateString('fr-FR')} à ${time}. Une confirmation par email sera envoyée à ${email} et par SMS à ${phone}.`);
             closeBooking();
         });
 
