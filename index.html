@@ -85,45 +85,67 @@
         .modal-content label { display: block; margin: 1rem 0 0.5rem; color: var(--text); }
         .modal-content select, .modal-content input { width: 100%; padding: 0.5rem; border: 1px solid rgba(148,163,184,0.2); border-radius: 8px; background: #1f2937; color: var(--text); }
         .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            margin: 1rem 0;
+            max-width: 300px;
+            margin: 1rem auto;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            background: var(--card);
         }
 
         .calendar-header {
-            display: contents;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
-        .calendar-header div {
-            font-weight: bold;
+        .calendar-header h3 {
+            margin: 0;
+            color: var(--heading);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.25rem;
+        }
+
+        .calendar-day-name {
             text-align: center;
-            padding: 0.5rem;
-            background: var(--accent);
-            color: #0f172a;
-            border-radius: 8px;
+            font-weight: bold;
+            color: var(--accent);
+            padding: 0.5rem 0;
         }
 
         .calendar-day {
-            padding: 0.5rem;
-            text-align: center;
-            border-radius: 8px;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
+            font-size: 0.9rem;
         }
 
-        .calendar-day:hover {
+        .calendar-day:hover:not(.disabled) {
             background: rgba(245, 158, 11, 0.2);
         }
 
         .calendar-day.selected {
             background: var(--accent);
             color: #0f172a;
+            font-weight: bold;
         }
 
         .calendar-day.disabled {
             color: #64748b;
             cursor: not-allowed;
+        }
+
+        .calendar-day.empty {
+            visibility: hidden;
         }
 
 
@@ -219,22 +241,20 @@
                 <span class="close" onclick="closeBooking()">&times;</span>
                 <h2>Réserver un créneau</h2>
                 <div id="calendar-container">
-                    <div id="calendar-header">
-                        <button id="prev-month" class="btn">Précédent</button>
+                    <div class="calendar-header">
+                        <button id="prev-month" class="btn">&lt;</button>
                         <h3 id="month-year"></h3>
-                        <button id="next-month" class="btn">Suivant</button>
+                        <button id="next-month" class="btn">&gt;</button>
                     </div>
                     <div class="calendar">
-                        <div class="calendar-header">
-                            <div>Lun</div>
-                            <div>Mar</div>
-                            <div>Mer</div>
-                            <div>Jeu</div>
-                            <div>Ven</div>
-                            <div>Sam</div>
-                            <div>Dim</div>
-                        </div>
-                        <div id="calendar-days"></div>
+                        <div class="calendar-day-name">L</div>
+                        <div class="calendar-day-name">M</div>
+                        <div class="calendar-day-name">M</div>
+                        <div class="calendar-day-name">J</div>
+                        <div class="calendar-day-name">V</div>
+                        <div class="calendar-day-name">S</div>
+                        <div class="calendar-day-name">D</div>
+                        <div id="calendar-days" class="calendar-grid"></div>
                     </div>
                 </div>
                 <label for="time">Heure :</label>
@@ -269,7 +289,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <img src="https://images.unsplash.com/photo-1622296089863-9a4b0bb6d5b4?auto=format&fit=crop&w=800&q=80" alt="Rasage traditionnel" />
+                    <img src="https://images.unsplash.com/photo-1559599101-f09722fb4948?auto=format&fit=crop&w=800&q=80" alt="Rasage avec masque noir" />
                     <div class="card-content">
                         <h3>Rasage classique</h3>
                         <p>Rasage à l'ancienne avec serviette chaude et eau de soin.</p>
@@ -326,6 +346,7 @@
         function closeBooking() {
             const modal = document.getElementById('booking-modal');
             modal.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function renderCalendar() {
@@ -336,7 +357,8 @@
             const firstDay = new Date(currentYear, currentMonth, 1);
             const lastDay = new Date(currentYear, currentMonth + 1, 0);
             const startDate = new Date(firstDay);
-            startDate.setDate(startDate.getDate() - firstDay.getDay() + 1); // Start from Monday
+            const dayOfWeek = startDate.getDay();
+            startDate.setDate(startDate.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1)); // Start from Monday
 
             monthYear.textContent = new Date(currentYear, currentMonth).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
 
@@ -348,8 +370,8 @@
                 dayDiv.textContent = day.getDate();
 
                 if (day.getMonth() !== currentMonth) {
-                    dayDiv.classList.add('disabled');
-                } else if (day < new Date()) {
+                    dayDiv.classList.add('empty');
+                } else if (day < new Date().setHours(0,0,0,0)) {
                     dayDiv.classList.add('disabled');
                 } else {
                     dayDiv.onclick = () => selectDate(day);
