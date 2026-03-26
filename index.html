@@ -111,13 +111,6 @@
             gap: 0.25rem;
         }
 
-        .calendar-day-name {
-            text-align: center;
-            font-weight: bold;
-            color: var(--accent);
-            padding: 0.5rem 0;
-        }
-
         .calendar-day {
             aspect-ratio: 1;
             display: flex;
@@ -247,13 +240,6 @@
                         <button id="next-month" class="btn">&gt;</button>
                     </div>
                     <div class="calendar">
-                        <div class="calendar-day-name">L</div>
-                        <div class="calendar-day-name">M</div>
-                        <div class="calendar-day-name">M</div>
-                        <div class="calendar-day-name">J</div>
-                        <div class="calendar-day-name">V</div>
-                        <div class="calendar-day-name">S</div>
-                        <div class="calendar-day-name">D</div>
                         <div id="calendar-days" class="calendar-grid"></div>
                     </div>
                 </div>
@@ -421,7 +407,7 @@
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
-            alert(`Réservation confirmée pour ${name} le ${selectedDate.toLocaleDateString('fr-FR')} à ${time}. Une confirmation par email sera envoyée à ${email} et par SMS à ${phone}.`);
+            alert(`Réservation confirmée pour ${name} le ${selectedDate.toLocaleDateString('fr-FR')} à ${time}. Une confirmation par email sera envoyée à ${email} et un SMS à ${phone}.`);
             closeBooking();
         });
 
